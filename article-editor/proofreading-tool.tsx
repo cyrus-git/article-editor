@@ -1,43 +1,36 @@
-'use client';
+'use client'
 
-import { Card, CardContent } from '@/components/ui/card';
-import { Textarea } from '@/components/ui/textarea';
-import { diffChars } from 'diff';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react'
+import { Card, CardContent } from "@/components/ui/card"
+import { Textarea } from "@/components/ui/textarea"
+import { diffChars } from 'diff'
 
 export default function Component() {
-  const [originalText, setOriginalText] = useState('');
-  const [correctedText, setCorrectedText] = useState('');
-  const [diff, setDiff] = useState<any[]>([]);
+  const [originalText, setOriginalText] = useState('')
+  const [correctedText, setCorrectedText] = useState('')
+  const [diff, setDiff] = useState<any[]>([])
 
   useEffect(() => {
-    const differences = diffChars(originalText, correctedText);
-    setDiff(differences);
-  }, [originalText, correctedText]);
+    const differences = diffChars(originalText, correctedText)
+    setDiff(differences)
+  }, [originalText, correctedText])
 
   const renderDiff = (text: string, type: 'original' | 'corrected') => {
     return diff.map((part, index) => {
-      const color = part.added
-        ? 'bg-green-200 dark:bg-green-900'
-        : part.removed
-        ? 'bg-red-200 dark:bg-red-900'
-        : '';
-      const display =
-        (type === 'original' && !part.added) ||
-        (type === 'corrected' && !part.removed);
+      const color = part.added ? 'bg-green-200 dark:bg-green-900' :
+                    part.removed ? 'bg-red-200 dark:bg-red-900' : ''
+      const display = (type === 'original' && !part.added) || (type === 'corrected' && !part.removed)
       return display ? (
         <span key={index} className={color}>
           {part.value}
         </span>
-      ) : null;
-    });
-  };
+      ) : null
+    })
+  }
 
   return (
     <div className="container mx-auto p-4 max-w-4xl">
-      <h1 className="text-2xl font-semibold mb-4 text-center">
-        Article Editor
-      </h1>
+      <h1 className="text-2xl font-semibold mb-4 text-center">Article Editor</h1>
       <div className="grid grid-cols-2 gap-4">
         <Card>
           <CardContent className="p-4">
@@ -71,5 +64,5 @@ export default function Component() {
         </Card>
       </div>
     </div>
-  );
+  )
 }
